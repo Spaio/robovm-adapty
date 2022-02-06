@@ -1,0 +1,465 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-module-flags: -target i386-apple-ios9.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Adapty
+import AdServices
+import AdSupport
+@_exported import Adapty
+import AppTrackingTransparency
+import CommonCrypto
+import Foundation
+import StoreKit
+import Swift
+import UIKit
+import WebKit
+import iAd
+@objc public protocol AdaptyDelegate {
+  @objc func didReceiveUpdatedPurchaserInfo(_ purchaserInfo: Adapty.PurchaserInfoModel)
+  @objc func didReceivePromo(_ promo: Adapty.PromoModel)
+  @objc optional func paymentQueue(shouldAddStorePaymentFor product: Adapty.ProductModel, defermentCompletion makeDeferredPurchase: @escaping Adapty.DeferredPurchaseCompletion)
+  @objc optional func didReceivePaywallsForConfig(paywalls: [Adapty.PaywallModel])
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class Adapty : ObjectiveC.NSObject {
+  @objc weak public static var delegate: Adapty.AdaptyDelegate?
+  @objc public static var logLevel: Adapty.AdaptyLogLevel {
+    @objc get
+    @objc set
+  }
+  @objc public static var idfaCollectionDisabled: Swift.Bool
+  @objc public class func activate(_ apiKey: Swift.String)
+  @objc public class func activate(_ apiKey: Swift.String, observerMode: Swift.Bool)
+  @objc public class func activate(_ apiKey: Swift.String, customerUserId: Swift.String?)
+  @objc public class func activate(_ apiKey: Swift.String, observerMode: Swift.Bool, customerUserId: Swift.String?)
+  @objc public class func identify(_ customerUserId: Swift.String, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func updateProfile(params: Adapty.ProfileParameterBuilder, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func updateAttribution(_ attribution: [Swift.AnyHashable : Any], source: Adapty.AttributionNetwork, networkUserId: Swift.String? = nil, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func getPaywalls(forceUpdate: Swift.Bool = false, _ completion: @escaping Adapty.PaywallsCompletion)
+  @objc public class func makePurchase(product: Adapty.ProductModel, offerId: Swift.String? = nil, completion: @escaping Adapty.BuyProductCompletion)
+  @objc public class func restorePurchases(completion: @escaping Adapty.RestorePurchasesCompletion)
+  @objc public static var apnsToken: Foundation.Data? {
+    @objc get
+    @objc set
+  }
+  @objc public static var apnsTokenString: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc public class var customerUserId: Swift.String? {
+    @objc get
+  }
+  @objc public class func getPurchaserInfo(forceUpdate: Swift.Bool = false, _ completion: @escaping Adapty.PurchaserCompletion)
+  @objc public class func getPromo(_ completion: Adapty.PromoCompletion? = nil)
+  @objc public class func handlePushNotification(_ userInfo: [Swift.AnyHashable : Any], completion: @escaping Adapty.ErrorCompletion)
+  @discardableResult
+  @objc public class func showVisualPaywall(for paywall: Adapty.PaywallModel, from viewController: UIKit.UIViewController, delegate: Adapty.AdaptyVisualPaywallDelegate) -> Adapty.PaywallViewController
+  @objc public class func getVisualPaywall(for paywall: Adapty.PaywallModel, delegate: Adapty.AdaptyVisualPaywallDelegate) -> Adapty.PaywallViewController
+  @objc public class func closeVisualPaywall(_ paywall: Adapty.PaywallViewController?)
+  @objc public class func setFallbackPaywalls(_ paywalls: Swift.String, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func logShowPaywall(_ paywall: Adapty.PaywallModel, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func setExternalAnalyticsEnabled(_ enabled: Swift.Bool, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func setVariationId(_ variationId: Swift.String, forTransactionId transactionId: Swift.String, completion: Adapty.ErrorCompletion? = nil)
+  @objc public class func presentCodeRedemptionSheet()
+  @objc public class func logout(_ completion: Adapty.ErrorCompletion? = nil)
+  @objc deinit
+}
+public typealias ProfileCreateCompletion = (Adapty.PurchaserInfoModel?, Adapty.AdaptyError?, Swift.Bool?) -> Swift.Void
+public typealias PaywallsCompletion = ([Adapty.PaywallModel]?, [Adapty.ProductModel]?, Adapty.AdaptyError?) -> Swift.Void
+public typealias ValidateReceiptCompletion = (Adapty.PurchaserInfoModel?, Adapty.Parameters?, Adapty.AdaptyError?) -> Swift.Void
+public typealias JSONCompletion = (Adapty.Parameters?, Adapty.AdaptyError?) -> Swift.Void
+public typealias ErrorCompletion = (Adapty.AdaptyError?) -> Swift.Void
+public typealias PurchaserCompletion = (Adapty.PurchaserInfoModel?, Adapty.AdaptyError?) -> Swift.Void
+public typealias PromoCompletion = (Adapty.PromoModel?, Adapty.AdaptyError?) -> Swift.Void
+@objc public enum AttributionNetwork : Swift.UInt {
+  case adjust
+  case appsflyer
+  case branch
+  case appleSearchAds
+  case custom
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+extension PaywallModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension ProductModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension ProductModel.PeriodUnit : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension ProductSubscriptionPeriodModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension ProductDiscountModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension ProductDiscountModel.PaymentMode : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension PromoModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension PurchaserInfoModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension AccessLevelInfoModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension SubscriptionInfoModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension NonSubscriptionInfoModel {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+@objc public enum DataState : Swift.Int, Swift.Codable {
+  case cached
+  case synced
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers public class AdaptyError : Foundation.NSError {
+  @objc public var originalError: Swift.Error?
+  @objc public var adaptyErrorCode: Adapty.AdaptyError.AdaptyErrorCode
+  @objc public enum AdaptyErrorCode : Swift.Int {
+    case none = -1
+    case unknown = 0
+    case clientInvalid = 1
+    case paymentCancelled = 2
+    case paymentInvalid = 3
+    case paymentNotAllowed = 4
+    case storeProductNotAvailable = 5
+    case cloudServicePermissionDenied = 6
+    case cloudServiceNetworkConnectionFailed = 7
+    case cloudServiceRevoked = 8
+    case privacyAcknowledgementRequired = 9
+    case unauthorizedRequestData = 10
+    case invalidOfferIdentifier = 11
+    case invalidSignature = 12
+    case missingOfferParams = 13
+    case invalidOfferPrice = 14
+    case noProductIDsFound = 1000
+    case noProductsFound = 1001
+    case productRequestFailed = 1002
+    case cantMakePayments = 1003
+    case noPurchasesToRestore = 1004
+    case cantReadReceipt = 1005
+    case productPurchaseFailed = 1006
+    case missingOfferSigningParams = 1007
+    case fallbackPaywallsNotRequired = 1008
+    case emptyResponse = 2000
+    case emptyData = 2001
+    case authenticationError = 2002
+    case badRequest = 2003
+    case serverError = 2004
+    case failed = 2005
+    case unableToDecode = 2006
+    case missingParam = 2007
+    case invalidProperty = 2008
+    case encodingFailed = 2009
+    case missingURL = 2010
+    case analyticsDisabled = 3000
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc override dynamic public init(domain: Swift.String, code: Swift.Int, userInfo dict: [Swift.String : Any]? = nil)
+  @objc deinit
+}
+public typealias BuyProductCompletion = (Adapty.PurchaserInfoModel?, Swift.String?, Adapty.Parameters?, Adapty.ProductModel?, Adapty.AdaptyError?) -> Swift.Void
+public typealias RestorePurchasesCompletion = (Adapty.PurchaserInfoModel?, Swift.String?, Adapty.Parameters?, Adapty.AdaptyError?) -> Swift.Void
+public typealias DeferredPurchaseCompletion = (Adapty.BuyProductCompletion?) -> Swift.Void
+@objc public enum AdaptyLogLevel : Swift.Int {
+  case none
+  case errors
+  case verbose
+  case all
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public typealias Parameters = [Swift.String : Any]
+@objc @_hasMissingDesignatedInitializers public class PaywallModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var developerId: Swift.String
+  @objc public var variationId: Swift.String
+  @objc public var revision: Swift.Int
+  @objc public var isPromo: Swift.Bool
+  @objc public var products: [Adapty.ProductModel]
+  @objc public var visualPaywall: Swift.String?
+  @objc public var customPayloadString: Swift.String?
+  @objc public var customPayload: Adapty.Parameters? {
+    @objc get
+    @objc set
+  }
+  @objc public var abTestName: Swift.String?
+  @objc public var name: Swift.String?
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc public protocol AdaptyVisualPaywallDelegate {
+  @objc func didPurchase(product: Adapty.ProductModel, purchaserInfo: Adapty.PurchaserInfoModel?, receipt: Swift.String?, appleValidationResult: Adapty.Parameters?, paywall: Adapty.PaywallViewController)
+  @objc func didFailPurchase(product: Adapty.ProductModel, error: Adapty.AdaptyError, paywall: Adapty.PaywallViewController)
+  @objc func didCancel(paywall: Adapty.PaywallViewController)
+  @objc func didRestore(purchaserInfo: Adapty.PurchaserInfoModel?, receipt: Swift.String?, appleValidationResult: Adapty.Parameters?, error: Adapty.AdaptyError?, paywall: Adapty.PaywallViewController)
+}
+@_inheritsConvenienceInitializers @objc public class PaywallViewController : UIKit.UIViewController {
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension PaywallViewController : WebKit.WKNavigationDelegate {
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
+}
+@objc @_hasMissingDesignatedInitializers public class ProductModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public enum PeriodUnit : Swift.UInt, Swift.Codable {
+    case day
+    case week
+    case month
+    case year
+    case unknown
+    public init?(rawValue: Swift.UInt)
+    public typealias RawValue = Swift.UInt
+    public var rawValue: Swift.UInt {
+      get
+    }
+  }
+  @objc public var vendorProductId: Swift.String
+  @objc public var introductoryOfferEligibility: Swift.Bool
+  @objc public var promotionalOfferEligibility: Swift.Bool
+  @objc public var promotionalOfferId: Swift.String?
+  @objc public var paywallABTestName: Swift.String?
+  @objc public var paywallName: Swift.String?
+  @objc public var localizedDescription: Swift.String
+  @objc public var localizedTitle: Swift.String
+  @objc public var price: Foundation.Decimal
+  @objc public var currencyCode: Swift.String?
+  @objc public var currencySymbol: Swift.String?
+  @objc public var regionCode: Swift.String?
+  @objc public var isFamilyShareable: Swift.Bool
+  @objc public var subscriptionPeriod: Adapty.ProductSubscriptionPeriodModel?
+  @objc public var introductoryDiscount: Adapty.ProductDiscountModel?
+  @objc public var subscriptionGroupIdentifier: Swift.String?
+  @objc public var discounts: [Adapty.ProductDiscountModel]
+  @objc public var localizedPrice: Swift.String?
+  @objc public var localizedSubscriptionPeriod: Swift.String?
+  @objc public var skProduct: StoreKit.SKProduct? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class ProductSubscriptionPeriodModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var unit: Adapty.ProductModel.PeriodUnit
+  @objc public var numberOfUnits: Swift.Int
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class ProductDiscountModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public enum PaymentMode : Swift.UInt, Swift.Codable {
+    case payAsYouGo
+    case payUpFront
+    case freeTrial
+    case unknown
+    public init?(rawValue: Swift.UInt)
+    public typealias RawValue = Swift.UInt
+    public var rawValue: Swift.UInt {
+      get
+    }
+  }
+  @objc public var price: Foundation.Decimal
+  @objc public var identifier: Swift.String?
+  @objc public var subscriptionPeriod: Adapty.ProductSubscriptionPeriodModel
+  @objc public var numberOfPeriods: Swift.Int
+  @objc public var paymentMode: Adapty.ProductDiscountModel.PaymentMode
+  @objc public var localizedPrice: Swift.String?
+  @objc public var localizedSubscriptionPeriod: Swift.String?
+  @objc public var localizedNumberOfPeriods: Swift.String?
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc public enum Gender : Swift.Int {
+  case female
+  case male
+  case other
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class ProfileParameterBuilder : ObjectiveC.NSObject {
+  @objc public func withEmail(_ email: Swift.String) -> Self
+  @objc public func withPhoneNumber(_ phoneNumber: Swift.String) -> Self
+  @objc public func withFacebookUserId(_ facebookUserId: Swift.String) -> Self
+  @objc public func withFacebookAnonymousId(_ facebookAnonymousId: Swift.String) -> Self
+  @objc public func withAmplitudeUserId(_ amplitudeUserId: Swift.String) -> Self
+  @objc public func withAmplitudeDeviceId(_ amplitudeDeviceId: Swift.String) -> Self
+  @objc public func withMixpanelUserId(_ mixpanelUserId: Swift.String) -> Self
+  @objc public func withAppmetricaProfileId(_ appmetricaProfileId: Swift.String) -> Self
+  @objc public func withAppmetricaDeviceId(_ appmetricaDeviceId: Swift.String) -> Self
+  @objc public func withFirstName(_ firstName: Swift.String) -> Self
+  @objc public func withLastName(_ lastName: Swift.String) -> Self
+  @objc public func withGender(_ gender: Adapty.Gender) -> Self
+  @objc public func withBirthday(_ birthday: Foundation.Date) -> Self
+  @objc public func withCustomAttributes(_ customAttributes: Adapty.Parameters) -> Self
+  @available(iOS 14, macOS 11.0, *)
+  @objc public func withAppTrackingTransparencyStatus(_ appTrackingTransparencyStatus: AppTrackingTransparency.ATTrackingManager.AuthorizationStatus) -> Self
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class PromoModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var promoType: Swift.String
+  @objc public var variationId: Swift.String
+  @objc public var expiresAt: Foundation.Date?
+  @objc public var paywall: Adapty.PaywallModel?
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class PurchaserInfoModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var profileId: Swift.String
+  @objc public var customerUserId: Swift.String?
+  @objc public var accessLevels: [Swift.String : Adapty.AccessLevelInfoModel]
+  @objc public var subscriptions: [Swift.String : Adapty.SubscriptionInfoModel]
+  @objc public var nonSubscriptions: [Swift.String : [Adapty.NonSubscriptionInfoModel]]
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class AccessLevelInfoModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var id: Swift.String
+  @objc public var isActive: Swift.Bool
+  @objc public var vendorProductId: Swift.String
+  @objc public var store: Swift.String
+  @objc public var activatedAt: Foundation.Date?
+  @objc public var renewedAt: Foundation.Date?
+  @objc public var expiresAt: Foundation.Date?
+  @objc public var isLifetime: Swift.Bool
+  @objc public var activeIntroductoryOfferType: Swift.String?
+  @objc public var activePromotionalOfferType: Swift.String?
+  @objc public var willRenew: Swift.Bool
+  @objc public var isInGracePeriod: Swift.Bool
+  @objc public var unsubscribedAt: Foundation.Date?
+  @objc public var billingIssueDetectedAt: Foundation.Date?
+  @objc public var vendorTransactionId: Swift.String?
+  @objc public var vendorOriginalTransactionId: Swift.String?
+  @objc public var startsAt: Foundation.Date?
+  @objc public var cancellationReason: Swift.String?
+  @objc public var isRefund: Swift.Bool
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class SubscriptionInfoModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var isActive: Swift.Bool
+  @objc public var vendorProductId: Swift.String
+  @objc public var store: Swift.String
+  @objc public var activatedAt: Foundation.Date?
+  @objc public var renewedAt: Foundation.Date?
+  @objc public var expiresAt: Foundation.Date?
+  @objc public var startsAt: Foundation.Date?
+  @objc public var isLifetime: Swift.Bool
+  @objc public var activeIntroductoryOfferType: Swift.String?
+  @objc public var activePromotionalOfferType: Swift.String?
+  @objc public var willRenew: Swift.Bool
+  @objc public var isInGracePeriod: Swift.Bool
+  @objc public var unsubscribedAt: Foundation.Date?
+  @objc public var billingIssueDetectedAt: Foundation.Date?
+  @objc public var isSandbox: Swift.Bool
+  @objc public var vendorTransactionId: Swift.String?
+  @objc public var vendorOriginalTransactionId: Swift.String?
+  @objc public var cancellationReason: Swift.String?
+  @objc public var isRefund: Swift.Bool
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class NonSubscriptionInfoModel : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var purchaseId: Swift.String
+  @objc public var vendorProductId: Swift.String
+  @objc public var store: Swift.String
+  @objc public var purchasedAt: Foundation.Date?
+  @objc public var isOneTime: Swift.Bool
+  @objc public var isSandbox: Swift.Bool
+  @objc public var vendorTransactionId: Swift.String?
+  @objc public var vendorOriginalTransactionId: Swift.String?
+  @objc public var isRefund: Swift.Bool
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+extension Adapty.AttributionNetwork : Swift.Equatable {}
+extension Adapty.AttributionNetwork : Swift.Hashable {}
+extension Adapty.AttributionNetwork : Swift.RawRepresentable {}
+extension Adapty.ProductModel.PeriodUnit : Swift.Equatable {}
+extension Adapty.ProductModel.PeriodUnit : Swift.Hashable {}
+extension Adapty.ProductModel.PeriodUnit : Swift.RawRepresentable {}
+extension Adapty.ProductDiscountModel.PaymentMode : Swift.Equatable {}
+extension Adapty.ProductDiscountModel.PaymentMode : Swift.Hashable {}
+extension Adapty.ProductDiscountModel.PaymentMode : Swift.RawRepresentable {}
+extension Adapty.DataState : Swift.Equatable {}
+extension Adapty.DataState : Swift.Hashable {}
+extension Adapty.DataState : Swift.RawRepresentable {}
+extension Adapty.AdaptyError.AdaptyErrorCode : Swift.Equatable {}
+extension Adapty.AdaptyError.AdaptyErrorCode : Swift.Hashable {}
+extension Adapty.AdaptyError.AdaptyErrorCode : Swift.RawRepresentable {}
+extension Adapty.AdaptyLogLevel : Swift.Equatable {}
+extension Adapty.AdaptyLogLevel : Swift.Hashable {}
+extension Adapty.AdaptyLogLevel : Swift.RawRepresentable {}
+extension Adapty.Gender : Swift.Equatable {}
+extension Adapty.Gender : Swift.Hashable {}
+extension Adapty.Gender : Swift.RawRepresentable {}
